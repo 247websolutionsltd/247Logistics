@@ -8,11 +8,15 @@ import '@/global.css';
 import { Platform } from 'react-native';
 
 export const Colors = {
+  primary: "#1B4242",
   light: {
     text: '#000000',
     background: '#ffffff',
-    backgroundElement: '#F0F0F3',
+    backgroundElement: '#f0f3f0',
     backgroundSelected: '#E0E1E6',
+    paper: '#f7fbf9',
+    inkSoft: "#565660",
+    line: "#EDEBE7",
     textSecondary: '#60646C',
   },
   dark: {
@@ -20,6 +24,9 @@ export const Colors = {
     background: '#000000',
     backgroundElement: '#212225',
     backgroundSelected: '#2E3135',
+    paper: '#092635',
+    inkSoft: "#7e7e85",
+    line: "#5e5d5c",
     textSecondary: '#B0B4BA',
   },
 } as const;
@@ -59,6 +66,13 @@ export const Spacing = {
   four: 24,
   five: 32,
   six: 64,
+} as const;
+
+export const Radius = {
+  sm: 10,
+  md: 16,
+  lg: 24,
+  pill: 999,
 } as const;
 
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;

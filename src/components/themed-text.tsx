@@ -4,7 +4,7 @@ import { Fonts, ThemeColor } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 export type ThemedTextProps = TextProps & {
-  type?: 'default' | 'title' | 'small' | 'smallBold' | 'subtitle' | 'link' | 'linkPrimary' | 'code';
+  type?: 'default' | 'title' | 'small' | 'smallBold' | 'subtitle' | 'link' | 'linkPrimary' | 'code' | 'bold' | 'large' | 'mid' | 'big';
   themeColor?: ThemeColor;
 };
 
@@ -23,6 +23,10 @@ export function ThemedText({ style, type = 'default', themeColor, ...rest }: The
         type === 'link' && styles.link,
         type === 'linkPrimary' && styles.linkPrimary,
         type === 'code' && styles.code,
+        type === 'bold' && styles.bold,
+        type === 'large' && styles.large,
+        type === 'big' && styles.big,
+        type === 'mid' && styles.mid,
         style,
       ]}
       {...rest}
@@ -44,16 +48,21 @@ const styles = StyleSheet.create({
   default: {
     fontSize: 16,
     lineHeight: 24,
+    fontWeight: 400,
+  },
+  bold: {
+    fontSize: 18,
+    lineHeight: 22,
     fontWeight: 500,
   },
   title: {
-    fontSize: 48,
+    fontSize: 30,
     fontWeight: 600,
-    lineHeight: 52,
+    lineHeight: 35,
   },
   subtitle: {
-    fontSize: 32,
-    lineHeight: 44,
+    fontSize: 24,
+    lineHeight: 30,
     fontWeight: 600,
   },
   link: {
@@ -69,5 +78,20 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.mono,
     fontWeight: Platform.select({ android: 700 }) ?? 500,
     fontSize: 12,
+  },
+  large: {
+    fontSize: 28,
+    lineHeight: 32,
+    fontWeight: 600,
+  },
+  mid: {
+    fontSize: 15,
+    lineHeight: 18,
+    fontWeight: 400,
+  },
+  big: {
+    fontSize: 24,
+    lineHeight: 28,
+    fontWeight: 600,
   },
 });
