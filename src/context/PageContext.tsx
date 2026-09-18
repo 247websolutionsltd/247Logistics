@@ -19,12 +19,23 @@ type RegisterForm = {
   interest: string;
 };
 
+type Owner = {
+  profileImage:string;
+  name:string;
+  title:string;
+  phone:string;
+  email:string;
+  license:string;
+  about:string;  
+}
+
 type AuthContextType = {
   loading: boolean;
   logInForm: LogInForm;
   updateLogInField: (field: "email" | "password", value: string)=>void;
   registerForm: RegisterForm;
   updateRegisterField: (field: "email" | "password" | "confirm" | "name" | "phone" | "interest", value: string)=>void;
+  owner: Owner;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -71,6 +82,26 @@ export function AuthProvider({
     }));
   };
 
+  const [ owner, setOwner ] = useState({
+      profileImage:"https://images.unsplash.com/photo-1788801246805-284ab3eb2860?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
+      name:"Alexandra Chen",
+      title:"Luxry Property Specialist",
+      phone:"(310) 555-0148",
+      email:"alexandra@estates.com",
+      license:"DRE #01234567",
+      about:"Specializing in luxury estates across Lagos and the Westside for over a decade."
+  });
+
+  const updateOwnerField = (
+    field: keyof typeof owner,
+    value: string
+  ) => {
+    setOwner((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
 
   return (
     <AuthContext.Provider
@@ -79,7 +110,8 @@ export function AuthProvider({
         logInForm,
         updateLogInField,
         registerForm,
-        updateRegisterField
+        updateRegisterField,
+        owner
       }}
     >
       {children}

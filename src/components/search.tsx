@@ -12,7 +12,7 @@ export default function Search({filter, style}:SearchProps){
     return(
         <View style={[styles.searchView, style]}>
             <MaterialIcons name="search" size={20} color={theme.textSecondary}/>
-            <TextInput placeholder="What are you looking for?" style={{flex:1, fontSize:15}}/>
+            <TextInput placeholder="What are you looking for?" style={{flex:1, fontSize:15}} placeholderTextColor={theme.textSecondary}/>
         </View>
     )
 }

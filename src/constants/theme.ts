@@ -8,7 +8,8 @@ import '@/global.css';
 import { Platform } from 'react-native';
 
 export const Colors = {
-  primary: "#1B4242",
+  primary: "#78A083",
+  primaryTint: "#71a680",
   light: {
     text: '#000000',
     background: '#ffffff',
@@ -24,7 +25,7 @@ export const Colors = {
     background: '#000000',
     backgroundElement: '#212225',
     backgroundSelected: '#2E3135',
-    paper: '#092635',
+    paper: '#344955',
     inkSoft: "#7e7e85",
     line: "#5e5d5c",
     textSecondary: '#B0B4BA',

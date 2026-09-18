@@ -1,4 +1,4 @@
-import { Spacing } from "@/constants/theme";
+import { Colors, Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import { useStyles } from "@/styles/styles";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -16,10 +16,10 @@ export default function HomeCard({icon, title, desc, selected, onPress}:CardProp
     const styles = useStyles();
     const theme = useTheme();
     return(
-        <TouchableOpacity style={[styles.homeCard, {backgroundColor:selected?theme.text:theme.backgroundElement}]} onPress={onPress}>
-            <MaterialIcons name={icon} size={40} color={selected?theme.background:theme.text}/>
-            <ThemedText type="bold" style={{marginTop:Spacing.two, color:selected?theme.background:theme.text,}}>{title}</ThemedText>
-            <ThemedText style={{fontSize:10, lineHeight:10, marginTop:Spacing.half, color:selected?theme.background:theme.text}}>
+        <TouchableOpacity style={[styles.homeCard, {backgroundColor:selected?Colors.primary:theme.backgroundElement}]} onPress={onPress}>
+            <MaterialIcons name={icon} size={40} color={selected?"#FFF":theme.text}/>
+            <ThemedText type="bold" style={{marginTop:Spacing.two, color:selected?"#FFF":theme.text}}>{title}</ThemedText>
+            <ThemedText style={{fontSize:10, lineHeight:10, marginTop:Spacing.half, color:selected?"#FFF":theme.text}}>
                 {desc}
             </ThemedText>
         </TouchableOpacity>
