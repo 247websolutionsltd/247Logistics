@@ -3,7 +3,7 @@ import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
-import { router } from "expo-router";
+import { useStyles } from "@/styles/styles";
 import { ScrollView, View } from "react-native";
 
 const privacySections = [
@@ -26,16 +26,18 @@ const privacySections = [
 ];
 
 export default function PrivacyPolicy() {
-  const theme = useTheme();
+    const theme = useTheme();
+    const styles = useStyles();
 
   return (
     <Container edges={["top"]}>
       <ScrollView contentContainerStyle={{ padding: Spacing.three, paddingBottom: Spacing.five }}>
-        <Back onPress={() => router.back()} title="Profile" />
-
-        <ThemedText type="large" style={{ marginTop: Spacing.three, marginBottom: Spacing.two }}>
-          Privacy policy
-        </ThemedText>
+        <View style={[styles.row, {marginBottom:Spacing.three}]}>
+            <Back icon="arrow-back"/>
+            <ThemedText type="large" style={{ marginTop: Spacing.three, marginBottom: Spacing.two }}>
+                Privacy policy
+            </ThemedText>
+        </View>
 
         <View
           style={{

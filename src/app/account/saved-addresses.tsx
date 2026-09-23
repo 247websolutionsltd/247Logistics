@@ -4,6 +4,7 @@ import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
+import { useStyles } from "@/styles/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
@@ -22,16 +23,18 @@ const addresses = [
 ];
 
 export default function SavedAddresses() {
-  const theme = useTheme();
+    const theme = useTheme();
+    const styles = useStyles();
 
   return (
     <Container edges={["top"]}>
       <View style={{ padding: Spacing.three }}>
-        <Back onPress={() => router.back()} title="Profile" />
-
-        <ThemedText type="large" style={{ marginTop: Spacing.three, marginBottom: Spacing.two }}>
-          Saved addresses
-        </ThemedText>
+        <View style={[styles.row, {marginBottom:Spacing.three}]}>
+            <Back icon="arrow-back"/>
+            <ThemedText type="large" style={{ marginTop: Spacing.three, marginBottom: Spacing.two }}>
+                Saved addresses
+            </ThemedText>
+        </View>
 
         <View style={{ backgroundColor: theme.background, borderRadius: 18, borderWidth: 1, borderColor: theme.line, overflow: "hidden" }}>
           {addresses.map((item, index) => (

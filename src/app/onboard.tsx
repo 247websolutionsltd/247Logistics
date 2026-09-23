@@ -3,6 +3,7 @@ import Button from "@/components/button";
 import OnboardingItem from "@/components/onboard";
 import Paginator from "@/components/paginator";
 import { ThemedText } from "@/components/themed-text";
+import { Spacing } from "@/constants/theme";
 import { onboardingData } from "@/data/onboardData";
 import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
@@ -17,7 +18,10 @@ const OnboardingScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList<any> | null>(null);
   const viewableItemsChanged = useRef(({ viewableItems }: any) => {
-    setCurrentIndex(viewableItems[0].index);
+    const nextIndex = viewableItems[0]?.index;
+    if (typeof nextIndex === "number") {
+      setCurrentIndex(nextIndex);
+    }
   }).current;
   const { isLoading, setIsLoading } = useHook();
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
@@ -39,21 +43,25 @@ const OnboardingScreen = () => {
   const finishOnboarding = async () => {
     setIsLoading(true);
     try {
-      setIsLoading(false);
       await AsyncStorage.setItem('onboarded', 'true');
       router.replace("/auth/logIn");
     } catch (e) {
-      setIsLoading(false);
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   };
   const styles = useStyles();
   const theme = useTheme();
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor:theme.paper}} edges={['bottom']}>
-      <TouchableOpacity style={styles.skip} onPress={finishOnboarding}>
-        <ThemedText style={{color:"#FFF"}}>Skip</ThemedText>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.paper }} edges={['top', 'bottom']}>
+      <TouchableOpacity
+        style={[styles.skip, { backgroundColor: theme.accentSurface }]}
+        onPress={finishOnboarding}
+        disabled={isLoading}
+      >
+        <ThemedText type="smallBold" style={{ color: theme.accentText }}>Skip</ThemedText>
       </TouchableOpacity>
 
       <FlatList
@@ -70,7 +78,7 @@ const OnboardingScreen = () => {
       <View style={onboardStyles.bottom}>
         {
           currentIndex > 0 &&
-          <Back onPress={scrollBack}/>
+          <Back onPress={scrollBack} />
         }
         
         <Button
@@ -91,7 +99,9 @@ const onboardStyles = StyleSheet.create({
   bottom:{
     flexDirection:'row',
     alignItems:'center',
-    paddingHorizontal:20,
-    marginTop:20
+    paddingHorizontal: Spacing.three,
+    paddingTop: Spacing.three,
+    paddingBottom: Spacing.two,
+    gap: Spacing.two,
   }
 });

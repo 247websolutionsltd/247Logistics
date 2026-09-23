@@ -3,23 +3,29 @@ import { Colors } from "@/constants/theme";
 export const onboardingData = [
   {
     id: "1",
-    title: "Find products near you",
-    description: "Search thousands of ads across Lagos and beyond. Filter by price, category and distance.",
+    title: "Every delivery, clearly tracked",
+    description: "See active routes, delivery progress, and arrival times in one calm, reliable dashboard.",
     image: require("../../assets/images/onboard1.jpg"),
+    icon: "route",
+    eyebrow: "TRACK EVERY ROUTE",
     pageColor: Colors.primary
   },
   {
     id: "2",
-    title: "List in under a minute",
-    description: "Snap a few photos, add a price, and your ad goes live... no forms to fight with.",
+    title: "Send packages without the guesswork",
+    description: "Create a pickup in a few steps, choose the right service, and get a clear quote before you confirm.",
     image: require("../../assets/images/onboard2.jpg"),
+    icon: "local-shipping",
+    eyebrow: "BOOK IN MINUTES",
     pageColor: Colors.primary
   },
   {
     id: "3",
-    title: "Chat and deal safely",
-    description: "Message buyers and sellers in-app, and look for the verified badge before you meet up.",
+    title: "A better handoff from pickup to delivery",
+    description: "Stay connected with timely updates and support while your package moves through every step.",
     image: require("../../assets/images/onboard3.jpg"),
+    icon: "support-agent",
+    eyebrow: "DELIVERY SUPPORT",
     pageColor: Colors.primary
   },
 ];

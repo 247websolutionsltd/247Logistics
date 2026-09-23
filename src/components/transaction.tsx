@@ -17,7 +17,7 @@ export default function Transaction({title, date, price}:TransactionProps){
                 <ThemedText type="bold">{title}</ThemedText>
                 <ThemedText style={{fontSize:13, lineHeight:15}}>{date}</ThemedText>
             </View>
-            <ThemedText>{price}</ThemedText>
+            <ThemedText>₦{price}</ThemedText>
         </TouchableOpacity>
     )
 }

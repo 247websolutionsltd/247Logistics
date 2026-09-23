@@ -1,11 +1,13 @@
 import { Colors, Radius, Spacing } from "@/constants/theme";
+import { useAppTheme } from "@/context/PageContext";
 import { Dimensions, StyleSheet, useColorScheme } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // export type ThemeType = typeof Colors.light;
 export function useStyles() {
+  const { themeMode, setThemeMode } = useAppTheme();
   const colorScheme = useColorScheme() ?? 'light';
-  const theme = colorScheme === "light" ? Colors.light : Colors.dark;
+  const theme = themeMode === "dark" ? Colors.dark : Colors.light
   const {width, height} = Dimensions.get('window');
   const insets = useSafeAreaInsets();
   // Pass the active theme colors into the factory function below
@@ -40,22 +42,22 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
     },
     backButton:{
       borderWidth:1,
-      borderColor:theme.text,
+      borderColor:theme.line,
       alignItems:'center',
       justifyContent:'center',
-      width:'25%',
+      width:50,
       marginRight:10,
       height:50,
-      borderRadius:16
+      borderRadius:100,
+      backgroundColor:theme.background
     },
     skip: {
       position: "absolute",
-      top: 50,
-      right: 20,
+      top: 12,
+      right: 16,
       zIndex: 10,
       padding:Spacing.two,
-      backgroundColor:"#5c534232",
-      borderRadius:20
+      borderRadius:Radius.pill
     },
     addView:{
       flex:1,
@@ -257,11 +259,9 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
       paddingVertical:Spacing.three,
       flexDirection:'row',
       alignItems:'center',
-      borderBottomColor:theme.line
     },
     topUp:{
       backgroundColor:theme.tint,
-      margin:Spacing.three,
       borderRadius:Radius.md,
       padding:Spacing.three,
       alignItems:'center'
@@ -285,8 +285,45 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
       justifyContent:'space-between',
       padding:Spacing.two,
       borderRadius:Radius.sm,
-      borderBottomWidth:1,
-      borderColor:theme.line,
       marginVertical:Spacing.two
+    },
+    wallet:{
+        backgroundColor: Colors.primaryDark,
+        borderRadius: 24,
+        padding: Spacing.three,
+    },
+    walletIcon:{
+        width: 44,
+        height: 44,
+        borderRadius: 14,
+        backgroundColor: "rgba(120, 160, 131, 0.24)",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    walletSummary:{
+        flex: 1,
+        backgroundColor: "rgba(255,255,255,0.08)",
+        borderRadius: 14,
+        padding: Spacing.two,
+        marginHorizontal: Spacing.half,
+    },
+    filters:{
+        paddingHorizontal: Spacing.two,
+        paddingVertical: Spacing.one,
+        borderRadius: 999,
+    },
+    transactions:{
+        backgroundColor: theme.background,
+        borderRadius: 14,
+        borderWidth: 1,
+        borderColor: theme.line,
+        paddingHorizontal: Spacing.two,
+    },
+    notificationCard:{
+        marginHorizontal: Spacing.three,
+        borderRadius: 18,
+        borderWidth: 1,
+        borderColor: theme.line,
+        overflow: "hidden",
     }
 });

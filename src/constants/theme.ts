@@ -31,7 +31,7 @@ export const Colors = {
     background: '#101311',
     backgroundElement: '#212225',
     backgroundSelected: '#2E3135',
-    tint: "#adc5b4",
+    tint: "#344c3b",
     paper: '#171b18',
     inkSoft: "#7e7e85",
     line: "#3b443e",

@@ -20,9 +20,11 @@ export default function OTPInput() {
   const inputRefs = useRef<(TextInput | null)[]>([]);
 
   useEffect(() => {
-    setTimeout(() => {
+    const focusTimer = setTimeout(() => {
       inputRefs.current[0]?.focus();
     }, 100);
+
+    return () => clearTimeout(focusTimer);
   }, []);
 
   const handleChange = (text: string, index: number) => {

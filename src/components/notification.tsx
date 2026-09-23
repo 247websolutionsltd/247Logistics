@@ -16,7 +16,7 @@ export default function NotificationCard({icon, title, desc, end=false}:Notifica
     const styles = useStyles();
     const theme = useTheme();
     return(
-        <TouchableOpacity style={[styles.notification, {borderBottomWidth:end?0:1}]}>
+        <TouchableOpacity style={styles.notification}>
             <MaterialIcons name={icon} size={25} color={theme.text}/>
             <View style={{marginLeft:Spacing.two}}>
                 <ThemedText type="bold">{title}</ThemedText>

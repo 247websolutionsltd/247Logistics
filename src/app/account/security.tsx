@@ -4,6 +4,7 @@ import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Colors, Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
+import { useStyles } from "@/styles/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -17,6 +18,7 @@ const securityOptions = [
 
 export default function Security() {
   const theme = useTheme();
+  const styles = useStyles();
   const [options, setOptions] = useState(securityOptions);
 
   const toggleOption = (index: number) => {
@@ -30,12 +32,12 @@ export default function Security() {
   return (
     <Container edges={["top"]}>
       <View style={{ padding: Spacing.three }}>
-        <Back onPress={() => router.back()} title="Profile" />
-
-        <ThemedText type="large" style={{ marginTop: Spacing.three, marginBottom: Spacing.two }}>
-          Security
-        </ThemedText>
-
+        <View style={[styles.row, {marginBottom:Spacing.three}]}>
+            <Back icon="arrow-back"/>
+            <ThemedText type="large" style={{ marginTop: Spacing.three, marginBottom: Spacing.two }}>
+              Security
+            </ThemedText>
+        </View>
         <View style={{ backgroundColor: theme.background, borderRadius: 18, borderWidth: 1, borderColor: theme.line, overflow: "hidden" }}>
           {options.map((item, index) => (
             <View

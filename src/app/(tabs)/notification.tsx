@@ -4,6 +4,7 @@ import { ThemedText } from "@/components/themed-text";
 import { Colors, Spacing } from "@/constants/theme";
 import notifications from "@/data/notifications";
 import { useTheme } from "@/hooks/use-theme";
+import { useStyles } from "@/styles/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FlatList, TouchableOpacity, View } from "react-native";
 
@@ -11,7 +12,7 @@ const filters = ["All", "Orders", "Wallet", "Updates"];
 
 export default function Notification() {
     const theme = useTheme();
-
+    const styles = useStyles();
     return (
         <Container>
             <View style={{ padding: Spacing.three, paddingBottom: Spacing.two }}>
@@ -51,15 +52,10 @@ export default function Notification() {
                 renderItem={({ item, index }) => (
                     <View
                         key={`${item.title}-${index}`}
-                        style={{
+                        style={[styles.notificationCard, {
                             backgroundColor: index === 0 ? theme.accentSurface : theme.background,
-                            marginHorizontal: Spacing.three,
                             marginBottom: index === notifications.length - 1 ? 0 : Spacing.two,
-                            borderRadius: 18,
-                            borderWidth: 1,
-                            borderColor: theme.line,
-                            overflow: "hidden",
-                        }}
+                        }]}
                     >
                         <NotificationCard
                             icon={item.icon}

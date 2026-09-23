@@ -6,11 +6,13 @@ import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
 import { useAuth } from "@/context/PageContext";
 import { useTheme } from "@/hooks/use-theme";
+import { useStyles } from "@/styles/styles";
 import { router } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 
 export default function EditProfile() {
+  const styles = useStyles();
   const theme = useTheme();
   const { owner } = useAuth();
   const [name, setName] = useState(owner.name);
@@ -20,12 +22,12 @@ export default function EditProfile() {
   return (
     <Container edges={["top"]}>
       <View style={{ padding: Spacing.three }}>
-        <Back onPress={() => router.back()} title="Profile" />
-
-        <ThemedText type="large" style={{ marginTop: Spacing.three, marginBottom: Spacing.two }}>
-          Edit profile
-        </ThemedText>
-
+        <View style={[styles.row, {marginBottom:Spacing.three}]}>
+            <Back icon="arrow-back"/>
+            <ThemedText type="large" style={{ marginTop: Spacing.three, marginBottom: Spacing.two }}>
+            Edit profile
+            </ThemedText>
+        </View>
         <View
           style={{
             backgroundColor: theme.background,
