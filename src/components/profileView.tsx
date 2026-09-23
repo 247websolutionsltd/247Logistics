@@ -1,8 +1,10 @@
-import { Colors } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import { useAuth } from "@/context/PageContext";
 import { useTheme } from "@/hooks/use-theme";
 import { useStyles } from "@/styles/styles";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { useState } from "react";
 import { TouchableOpacity, View, ViewProps } from "react-native";
 import { ThemedText } from "./themed-text";
 
@@ -11,6 +13,7 @@ export default function ProfileView({style}:ViewProps){
     const styles = useStyles();
     const theme = useTheme();
     const {owner} = useAuth();
+    const [ visible, setVisible ] = useState(true);
     return(
         <View style={[styles.profileView, style]}>
             <View style={styles.row}>
@@ -20,12 +23,11 @@ export default function ProfileView({style}:ViewProps){
                 />
                 <View>
                     <ThemedText style={{color:theme.background}} type="bold">{owner.name}</ThemedText>
-                    <ThemedText style={{fontSize:12, lineHeight:16, color:theme.background}}>{owner.title}</ThemedText>
-                    <ThemedText style={{fontSize:12, lineHeight:16, color:theme.background}}>{owner.license}</ThemedText>
+                    <ThemedText style={{fontSize:12, lineHeight:16, color:theme.background}}>Current balance: {visible?"₦"+owner.balance:"****"}</ThemedText>
                 </View>
             </View>
-            <TouchableOpacity style={styles.editButton}>
-                <ThemedText type="small" style={{color:Colors.primary}}>Edit</ThemedText>
+            <TouchableOpacity onPress={()=>setVisible(!visible)}>
+                <MaterialIcons name={visible?"visibility-off":"visibility"} color={"#FFF"} size={18} style={{marginLeft:Spacing.two}}/>
             </TouchableOpacity>
         </View>
     )

@@ -1,9 +1,49 @@
 import {
-  createContext,
-  useContext,
-  useState,
-  type ReactNode
+    createContext,
+    useContext,
+    useState,
+    type ReactNode
 } from 'react';
+
+export type ThemeMode = 'light' | 'dark';
+
+type ThemeContextType = {
+  themeMode: ThemeMode;
+  setThemeMode: (mode: ThemeMode) => void;
+  toggleThemeMode: () => void;
+};
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export function AppThemeProvider({
+  children,
+  initialTheme = 'light',
+}: {
+  children: ReactNode;
+  initialTheme?: ThemeMode;
+}) {
+  const [themeMode, setThemeMode] = useState<ThemeMode>(initialTheme);
+
+  const toggleThemeMode = () => {
+    setThemeMode((current) => (current === 'light' ? 'dark' : 'light'));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ themeMode, setThemeMode, toggleThemeMode }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export function useAppTheme() {
+  const context = useContext(ThemeContext);
+
+  if (!context) {
+    throw new Error('useAppTheme must be used inside an AppThemeProvider');
+  }
+
+  return context;
+}
 
 type LogInForm = {
   email: string;
@@ -25,8 +65,7 @@ type Owner = {
   title:string;
   phone:string;
   email:string;
-  license:string;
-  about:string;  
+  balance:string;
 }
 
 type AuthContextType = {
@@ -84,11 +123,11 @@ export function AuthProvider({
 
   const [ owner, setOwner ] = useState({
       profileImage:"https://images.unsplash.com/photo-1788801246805-284ab3eb2860?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
-      name:"Alexandra Chen",
+      name:"Ken Nwaeze",
       title:"Luxry Property Specialist",
       phone:"(310) 555-0148",
       email:"alexandra@estates.com",
-      license:"DRE #01234567",
+      balance:"26,000",
       about:"Specializing in luxury estates across Lagos and the Westside for over a decade."
   });
 

@@ -1,180 +1,144 @@
-import { Image } from 'expo-image';
-import { SymbolView } from 'expo-symbols';
-import { Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Container from "@/components/custom-container";
+import { ThemedText } from "@/components/themed-text";
+import { Colors, Spacing } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
+import { MaterialIcons } from "@expo/vector-icons";
+import { TouchableOpacity, View } from "react-native";
 
-import { ExternalLink } from '@/components/external-link';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Collapsible } from '@/components/ui/collapsible';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
+const serviceCards = [
+    { title: "Track shipment", subtitle: "Live parcel tracking", icon: "location-searching" },
+    { title: "Fleet status", subtitle: "12 riders online", icon: "local-shipping" },
+    { title: "Service zones", subtitle: "7 active areas", icon: "map" },
+    { title: "Support desk", subtitle: "24/7 help center", icon: "headset-mic" },
+];
 
-export default function TabTwoScreen() {
-  const safeAreaInsets = useSafeAreaInsets();
-  const insets = {
-    ...safeAreaInsets,
-    bottom: safeAreaInsets.bottom + BottomTabInset + Spacing.three,
-  };
-  const theme = useTheme();
+const zoneMetrics = [
+    { label: "Deliveries today", value: "426", change: "+12%" },
+    { label: "Avg. ETA", value: "18 min", change: "-4 min" },
+    { label: "Capacity", value: "74%", change: "High" },
+];
 
-  const contentPlatformStyle = Platform.select({
-    android: {
-      paddingTop: insets.top,
-      paddingLeft: insets.left,
-      paddingRight: insets.right,
-      paddingBottom: insets.bottom,
-    },
-    web: {
-      paddingTop: Spacing.six,
-      paddingBottom: Spacing.four,
-    },
-  });
+export default function Explore() {
+    const theme = useTheme();
 
-  return (
-    <ScrollView
-      style={[styles.scrollView, { backgroundColor: theme.background }]}
-      contentInset={insets}
-      contentContainerStyle={[styles.contentContainer, contentPlatformStyle]}>
-      <ThemedView style={styles.container}>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="subtitle">Explore</ThemedText>
-          <ThemedText style={styles.centerText} themeColor="textSecondary">
-            This starter app includes example{'\n'}code to help you get started.
-          </ThemedText>
+    return (
+        <Container edges={["top"]}>
+            <View style={{ padding: Spacing.three }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                    <ThemedText type="large">Operations</ThemedText>
+                    <TouchableOpacity>
+                        <ThemedText type="small" style={{ color: theme.accentText }}>Filters</ThemedText>
+                    </TouchableOpacity>
+                </View>
 
-          <ExternalLink href="https://docs.expo.dev" asChild>
-            <Pressable style={({ pressed }) => pressed && styles.pressed}>
-              <ThemedView type="backgroundElement" style={styles.linkButton}>
-                <ThemedText type="link">Expo documentation</ThemedText>
-                <SymbolView
-                  tintColor={theme.text}
-                  name={{ ios: 'arrow.up.right.square', android: 'link', web: 'link' }}
-                  size={12}
-                />
-              </ThemedView>
-            </Pressable>
-          </ExternalLink>
-        </ThemedView>
+                <View
+                    style={{
+                        marginTop: Spacing.three,
+                        backgroundColor: Colors.primaryDark,
+                        borderRadius: 24,
+                        padding: Spacing.three,
+                    }}
+                >
+                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                        <ThemedText type="small" style={{ color: "#dfeee1" }}>Live route overview</ThemedText>
+                        <View
+                            style={{
+                                backgroundColor: "rgba(120, 160, 131, 0.2)",
+                                borderRadius: 999,
+                                paddingHorizontal: Spacing.two,
+                                paddingVertical: 4,
+                            }}
+                        >
+                            <ThemedText type="small" style={{ color: "#fff", fontSize: 11 }}>Live</ThemedText>
+                        </View>
+                    </View>
 
-        <ThemedView style={styles.sectionsWrapper}>
-          <Collapsible title="File-based routing">
-            <ThemedText type="small">
-              This app has two screens: <ThemedText type="code">src/app/index.tsx</ThemedText> and{' '}
-              <ThemedText type="code">src/app/explore.tsx</ThemedText>
-            </ThemedText>
-            <ThemedText type="small">
-              The layout file in <ThemedText type="code">src/app/_layout.tsx</ThemedText> sets up
-              the tab navigator.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/router/introduction">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
+                    <View
+                        style={{
+                            marginTop: Spacing.three,
+                            height: 150,
+                            borderRadius: 18,
+                            backgroundColor: "rgba(255,255,255,0.06)",
+                            padding: Spacing.three,
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                            <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: Colors.primary }} />
+                            <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: "#dfeee1" }} />
+                            <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: Colors.primary }} />
+                        </View>
+                        <View style={{ flexDirection: "row", justifyContent: "space-around", alignItems: "flex-end" }}>
+                            <View style={{ width: 30, height: 42, backgroundColor: "rgba(120,160,131,0.5)", borderRadius: 12 }} />
+                            <View style={{ width: 30, height: 64, backgroundColor: "rgba(120,160,131,0.7)", borderRadius: 12 }} />
+                            <View style={{ width: 30, height: 54, backgroundColor: "rgba(120,160,131,0.6)", borderRadius: 12 }} />
+                            <View style={{ width: 30, height: 72, backgroundColor: "rgba(120,160,131,0.85)", borderRadius: 12 }} />
+                        </View>
+                    </View>
+                </View>
+            </View>
 
-          <Collapsible title="Android, iOS, and web support">
-            <ThemedView type="backgroundElement" style={styles.collapsibleContent}>
-              <ThemedText type="small">
-                You can open this project on Android, iOS, and the web. To open the web version,
-                press <ThemedText type="smallBold">w</ThemedText> in the terminal running this
-                project.
-              </ThemedText>
-              <Image
-                source={require('@/assets/images/tutorial-web.png')}
-                style={styles.imageTutorial}
-              />
-            </ThemedView>
-          </Collapsible>
+            <View style={{ paddingHorizontal: Spacing.three, marginTop: Spacing.three }}>
+                <ThemedText type="bold" style={{ marginBottom: Spacing.two }}>Performance</ThemedText>
+                <View style={{ flexDirection: "row", gap: Spacing.two }}>
+                    {zoneMetrics.map((item) => (
+                        <View
+                            key={item.label}
+                            style={{
+                                flex: 1,
+                                backgroundColor: theme.background,
+                                borderRadius: 18,
+                                borderWidth: 1,
+                                borderColor: theme.line,
+                                padding: Spacing.two,
+                            }}
+                        >
+                            <ThemedText type="small" style={{ color: theme.textSecondary }}>{item.label}</ThemedText>
+                            <ThemedText type="bold" style={{ marginTop: Spacing.one }}>{item.value}</ThemedText>
+                            <ThemedText type="small" style={{ marginTop: Spacing.one, color: theme.accentText }}>
+                                {item.change}
+                            </ThemedText>
+                        </View>
+                    ))}
+                </View>
+            </View>
 
-          <Collapsible title="Images">
-            <ThemedText type="small">
-              For static images, you can use the <ThemedText type="code">@2x</ThemedText> and{' '}
-              <ThemedText type="code">@3x</ThemedText> suffixes to provide files for different
-              screen densities.
-            </ThemedText>
-            <Image source={require('@/assets/images/react-logo.png')} style={styles.imageReact} />
-            <ExternalLink href="https://reactnative.dev/docs/images">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
-
-          <Collapsible title="Light and dark mode components">
-            <ThemedText type="small">
-              This template has light and dark mode support. The{' '}
-              <ThemedText type="code">useColorScheme()</ThemedText> hook lets you inspect what the
-              user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
-
-          <Collapsible title="Animations">
-            <ThemedText type="small">
-              This template includes an example of an animated component. The{' '}
-              <ThemedText type="code">src/components/ui/collapsible.tsx</ThemedText> component uses
-              the powerful <ThemedText type="code">react-native-reanimated</ThemedText> library to
-              animate opening this hint.
-            </ThemedText>
-          </Collapsible>
-        </ThemedView>
-        {Platform.OS === 'web' && <WebBadge />}
-      </ThemedView>
-    </ScrollView>
-  );
+            <View style={{ paddingHorizontal: Spacing.three, marginTop: Spacing.three }}>
+                <ThemedText type="bold" style={{ marginBottom: Spacing.two }}>Explore services</ThemedText>
+                <View style={{ flexDirection: "row", flexWrap: "wrap", marginHorizontal: -Spacing.one }}>
+                    {serviceCards.map((item) => (
+                        <TouchableOpacity
+                            key={item.title}
+                            style={{
+                                width: "48%",
+                                margin: Spacing.one,
+                                backgroundColor: theme.background,
+                                borderRadius: 18,
+                                borderWidth: 1,
+                                borderColor: theme.line,
+                                padding: Spacing.three,
+                            }}
+                        >
+                            <View
+                                style={{
+                                    width: 42,
+                                    height: 42,
+                                    borderRadius: 12,
+                                    backgroundColor: theme.accentSurface,
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <MaterialIcons name={item.icon as any} size={20} color={theme.accentText} />
+                            </View>
+                            <ThemedText type="smallBold" style={{ marginTop: Spacing.two }}>{item.title}</ThemedText>
+                            <ThemedText type="small" style={{ color: theme.textSecondary, marginTop: Spacing.one }}>
+                                {item.subtitle}
+                            </ThemedText>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            </View>
+        </Container>
+    );
 }
-
-const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-  },
-  contentContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  container: {
-    maxWidth: MaxContentWidth,
-    flexGrow: 1,
-  },
-  titleContainer: {
-    gap: Spacing.three,
-    alignItems: 'center',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.six,
-  },
-  centerText: {
-    textAlign: 'center',
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-  linkButton: {
-    flexDirection: 'row',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.two,
-    borderRadius: Spacing.five,
-    justifyContent: 'center',
-    gap: Spacing.one,
-    alignItems: 'center',
-  },
-  sectionsWrapper: {
-    gap: Spacing.five,
-    paddingHorizontal: Spacing.four,
-    paddingTop: Spacing.three,
-  },
-  collapsibleContent: {
-    alignItems: 'center',
-  },
-  imageTutorial: {
-    width: '100%',
-    aspectRatio: 296 / 171,
-    borderRadius: Spacing.three,
-    marginTop: Spacing.two,
-  },
-  imageReact: {
-    width: 100,
-    height: 100,
-    alignSelf: 'center',
-  },
-});

@@ -14,15 +14,7 @@ export default function Profiles(){
     const alignItems = notification?"flex-end":"flex-start"
     return(
         <View style={styles.profile}>
-            <TouchableOpacity style={styles.profileInd}>
-                <MaterialIcons name="add" size={23} color={theme.text}/>
-                <View style={{flex:1, marginLeft:Spacing.two}}>
-                    <ThemedText>List a Property</ThemedText>
-                    <ThemedText style={{fontSize:13}}>Add a new listing</ThemedText>
-                </View>
-                <MaterialIcons name="chevron-right" size={20}/>
-            </TouchableOpacity>
-
+    
             <TouchableOpacity style={styles.profileInd} >
                 <MaterialIcons name="person-outline" size={23} color={theme.text}/>
                 <View style={{flex:1, marginLeft:Spacing.two}}>
@@ -54,7 +46,7 @@ export default function Profiles(){
                 <MaterialIcons name="chevron-right" size={20}/>
             </TouchableOpacity>
             
-            <TouchableOpacity style={[styles.profileInd, {borderBottomWidth:0, paddingRight:0}]}>
+            <TouchableOpacity style={[styles.profileInd, {borderBottomWidth:0}]}>
                 <MaterialIcons name="person-outline" size={23} color={theme.text}/>
                 <View style={{flex:1, marginLeft:Spacing.two}}>
                     <ThemedText>Help & support</ThemedText>

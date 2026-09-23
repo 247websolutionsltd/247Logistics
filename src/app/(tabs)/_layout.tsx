@@ -1,61 +1,125 @@
-import {
-  Dimensions
-} from "react-native";
 
 import { Colors } from "@/constants/theme";
-import { Ionicons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { useTheme } from "@/hooks/use-theme";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { router, Tabs } from "expo-router";
+import { Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const { width } = Dimensions.get("window");
+type IconName = keyof typeof Ionicons.glyphMap;
 
+const TAB_META: Record<string, { label: string; icon: IconName; iconActive: IconName }> = {
+  home: { label: "Home", icon: "home-outline", iconActive: "home" },
+  wallet: { label: "Wallet", icon: "wallet-outline", iconActive: "wallet" },
+  notification: { label: "Notifications", icon: "notifications-outline", iconActive: "notifications" },
+  profile: { label: "Profile", icon: "person-outline", iconActive: "person" },
+};
+interface TabBarRoute {
+  key: string;
+  name: string;
+}
+
+interface TabBarProps {
+  state: { index: number; routes: TabBarRoute[] };
+  navigation: { navigate: (name: string) => void };
+}
+
+const Send = ()=>{
+  return(
+    <TouchableOpacity style={styles.send} onPress={() => router.navigate('/(tabs)/send-package' as const)}>
+      <MaterialIcons name="send" size={30} color={"#FFF"} style={{left:4}}/>
+    </TouchableOpacity>
+  )
+}
+
+function CustomTabBar({ state, navigation }: TabBarProps) {
+  const theme = useTheme();
+  const insets = useSafeAreaInsets();
+  const routes = state.routes;
+  const left = routes.slice(0,2);
+  const right = routes.slice(2);
+
+  function renderTab(route: TabBarRoute) {
+    const meta = TAB_META[route.name];
+    if (!meta) return null;
+    const isFocused = state.routes[state.index]?.key === route.key;
+
+    return (
+      <Pressable
+        key={route.key}
+        onPress={() => navigation.navigate(route.name)}
+        style={styles.tab}
+        accessibilityRole="button"
+        accessibilityLabel={meta.label}
+        accessibilityState={{ selected: isFocused }}
+      >
+        <Ionicons name={isFocused ? meta.iconActive : meta.icon} size={24} color={isFocused ? Colors.primary : theme.textSecondary} />
+        <Text style={[styles.tabLabel, { color: isFocused ? Colors.primary : theme.textSecondary }]}>{meta.label}</Text>
+      </Pressable>
+    );
+  }
+
+  return (
+    <View style={[{backgroundColor: theme.background, borderTopColor: theme.line,}, styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
+      {left.map(renderTab)}
+      <Send/>
+      {right.map(renderTab)}
+    </View>
+  );
+}
 
 export default function TabsLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
-
-      <Tabs.Screen name="home" options={{ 
-        tabBarInactiveTintColor:"#1B4242",
-        tabBarActiveTintColor:Colors.primaryTint,
-        title: "Home", tabBarIcon: ({ color, focused }) => (
-        <Ionicons
-            name={focused ? "home" : "home-outline"}
-            size={24}
-            color={color}
-        />
-      ), }}  />
-
-      <Tabs.Screen name="wallet" options={{ 
-        tabBarInactiveTintColor:"#1B4242",
-        tabBarActiveTintColor:Colors.primaryTint,
-        title: "Wallet", tabBarIcon: ({ color, focused }) => (
-        <Ionicons
-            name={focused ? "wallet" : "wallet-outline"}
-            size={24}
-            color={color}
-        />
-      ), }}  />
-
-      <Tabs.Screen name="notification" options={{ 
-        tabBarInactiveTintColor:"#1B4242",
-        tabBarActiveTintColor:Colors.primaryTint,
-        title: "Notification", tabBarIcon: ({ color, focused }) => (
-        <Ionicons
-            name={focused ? "notifications" : "notifications-outline"}
-            size={24}
-            color={color}
-        />
-      ), }}  />
-      
-      <Tabs.Screen name="profile" options={{ 
-        tabBarInactiveTintColor:"#1B4242",
-        tabBarActiveTintColor:Colors.primaryTint,
-        title: "Profile", tabBarIcon: ({ color, focused }) => (
-        <Ionicons
-            name={focused ? "person" : "person-outline"}
-            size={24}
-            color={color}
-        />
-      ), }}  />
+    <Tabs tabBar={(props) => <CustomTabBar {...props} />} screenOptions={{ headerShown: false }}>
+      <Tabs.Screen name="home" options={{ title: "Home" }} />
+      <Tabs.Screen name="wallet" options={{ title: "Wallet" }} />
+      <Tabs.Screen name="send-package" options={{ href: null, title: "Send package" }} />
+      <Tabs.Screen name="notification" options={{ title: "Notification" }} />
+      <Tabs.Screen name="profile" options={{ title: "Profile" }} />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  bar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    borderTopWidth: 1,
+    ...(Platform.OS === "android" ? { elevation: 8 } : {}),
+  },
+  tab: {
+    flex: 1,
+    alignItems: "center",
+    gap: 3,
+  },
+  tabLabel: {
+    // fontFamily: fonts.bodyMedium,
+    fontSize: 11,
+    color: Colors.primaryDark,
+  },
+  fab: {
+    width: 50,
+    height: 50,
+    borderRadius: 16,
+    backgroundColor: Colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: -22,
+    shadowColor: Colors.primary,
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 6,
+  },
+  send:{
+    width:60,
+    height:60,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:200,
+    backgroundColor:Colors.primary,
+    bottom:15,
+    transform: [{ rotate: '-45deg' }], 
+  }
+});

@@ -201,7 +201,7 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
       height:15,
       alignItems:'center',
       justifyContent:'center',
-      backgroundColor:Colors.primaryTint,
+      backgroundColor:Colors.primaryDark,
       borderRadius:30,
       bottom:10,
       right:5
@@ -209,7 +209,7 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
     profileView:{
       padding:Spacing.three,
       borderRadius:Radius.md,
-      backgroundColor:theme.text,
+      backgroundColor:Colors.primaryDark,
       flexDirection:'row',
       alignItems:'center',
       justifyContent:'space-between',
@@ -239,7 +239,7 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
       width:16,
       height:16,
       borderRadius:100,
-      backgroundColor:"#f7fbf9"
+      backgroundColor:theme.paper
     },
     posterImage:{
       width:55,
@@ -257,7 +257,36 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
       paddingVertical:Spacing.three,
       flexDirection:'row',
       alignItems:'center',
-      borderBottomWidth:1,
       borderBottomColor:theme.line
+    },
+    topUp:{
+      backgroundColor:theme.tint,
+      margin:Spacing.three,
+      borderRadius:Radius.md,
+      padding:Spacing.three,
+      alignItems:'center'
+    },
+    topUpView:{
+      backgroundColor:Colors.primaryDark,
+      width:40,
+      height:40,
+      alignItems:'center',
+      justifyContent:'center',
+      borderRadius:100
+    },
+    topUpContainer:{
+      alignItems:'center', 
+      padding:Spacing.three, 
+      paddingTop:Spacing.two
+    },
+    transaction:{
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'space-between',
+      padding:Spacing.two,
+      borderRadius:Radius.sm,
+      borderBottomWidth:1,
+      borderColor:theme.line,
+      marginVertical:Spacing.two
     }
 });
