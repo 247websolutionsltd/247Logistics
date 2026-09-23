@@ -2,11 +2,38 @@ import { ThemedText } from '@/components/themed-text';
 import { Colors, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import { useEffect } from 'react';
 import { Pressable, View } from 'react-native';
 
 export default function HomeScreen() {
   const theme = useTheme();
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const checkOnboardingStatus = async () => {
+      try {
+        const hasCompletedOnboarding = await AsyncStorage.getItem('onboarded');
+
+        if (isMounted) {
+          router.replace(hasCompletedOnboarding === 'true' ? '/auth/logIn' : '/onboard');
+        }
+      } catch (error) {
+        console.error('Unable to read onboarding status', error);
+        if (isMounted) {
+          router.replace('/onboard');
+        }
+      }
+    };
+
+    checkOnboardingStatus();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.paper, padding: Spacing.three, justifyContent: 'center' }}>

@@ -53,7 +53,7 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
     },
     skip: {
       position: "absolute",
-      top: 12,
+      top: Spacing.three + insets.top,
       right: 16,
       zIndex: 10,
       padding:Spacing.two,
