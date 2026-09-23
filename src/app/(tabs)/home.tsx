@@ -8,6 +8,7 @@ import { useTheme } from "@/hooks/use-theme";
 import { useStyles } from "@/styles/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import { useMemo, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 
@@ -23,9 +24,9 @@ const activeRoutes = [
 ];
 
 const recentActivity = [
-    { title: "Package delivered", detail: "Order #0421 • Mainland Hub", time: "11:30 AM" },
-    { title: "Driver dispatched", detail: "J. Okafor • 2 parcels", time: "09:15 AM" },
-    { title: "Wallet funded", detail: "Top-up of $150.00", time: "Yesterday" },
+    { title: "Package delivered", detail: "Order #0421 • Mainland Hub", time: "11:30 AM", orderId: "LT-0421" },
+    { title: "Driver dispatched", detail: "J. Okafor • 2 parcels", time: "09:15 AM", orderId: "LT-0204" },
+    { title: "Wallet funded", detail: "Top-up of $150.00", time: "Yesterday", orderId: "LT-0118" },
 ];
 
 export default function Home() {
@@ -40,6 +41,18 @@ export default function Home() {
 
         return "Customer Care";
     }, [selected]);
+
+    const openQuickAction = (title: string) => {
+        const routes = {
+            "Customer Care": "/support",
+            "Send a package": "/(tabs)/send-package",
+            "Fund your wallet": "/wallet/top-up/card",
+            "Book a Rider": "/rider/book",
+            "Enroll as a Rider": "/rider/enroll",
+            "Refer and earn": "/refer",
+        } as const;
+        router.push(routes[title as keyof typeof routes] as never);
+    };
 
     return (
         <Container edges={["top"]}>
@@ -121,7 +134,7 @@ export default function Home() {
             <View style={{ paddingHorizontal: Spacing.three, marginTop: Spacing.three }}>
                 <View style={[styles.rowStretch, { marginBottom: Spacing.two }]}>
                     <ThemedText type="bold">Quick actions</ThemedText>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push({ pathname: "/search-results", params: { query: "" } } as never)}>
                         <ThemedText type="small" style={{ color: theme.accentText }}>View all</ThemedText>
                     </TouchableOpacity>
                 </View>
@@ -134,7 +147,7 @@ export default function Home() {
                                 title={item.title}
                                 desc={item.desc}
                                 selected={selected === index}
-                                onPress={() => setSelected(index)}
+                                onPress={() => { setSelected(index); openQuickAction(item.title); }}
                             />
                         </View>
                     ))}
@@ -144,7 +157,7 @@ export default function Home() {
             <View style={{ paddingHorizontal: Spacing.three, marginTop: Spacing.three }}>
                 <View style={[styles.rowStretch, { marginBottom: Spacing.two }]}>
                     <ThemedText type="bold">Active delivery lanes</ThemedText>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push("/track-shipment?orderId=LT-0204" as never)}>
                         <ThemedText type="small" style={{ color: theme.accentText }}>Today</ThemedText>
                     </TouchableOpacity>
                 </View>
@@ -204,7 +217,7 @@ export default function Home() {
             <View style={{ paddingHorizontal: Spacing.three, marginTop: Spacing.three, paddingBottom: Spacing.three }}>
                 <View style={[styles.rowStretch, { marginBottom: Spacing.two }]}>
                     <ThemedText type="bold">{selectedService}</ThemedText>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push("/track-shipment?orderId=LT-0204" as never)}>
                         <ThemedText type="small" style={{ color: theme.accentText }}>See details</ThemedText>
                     </TouchableOpacity>
                 </View>
@@ -229,14 +242,15 @@ export default function Home() {
                 <View style={{ marginTop: Spacing.three }}>
                     <View style={[styles.rowStretch, { marginBottom: Spacing.two }]}>
                         <ThemedText type="bold">Recent activity</ThemedText>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => router.push({ pathname: "/search-results", params: { query: "" } } as never)}>
                             <ThemedText type="small" style={{ color: theme.accentText }}>All</ThemedText>
                         </TouchableOpacity>
                     </View>
 
                     {recentActivity.map((item, index) => (
-                        <View
+                        <TouchableOpacity
                             key={item.title}
+                            onPress={() => router.push(`/order/${item.orderId}` as never)}
                             style={{
                                 flexDirection: "row",
                                 alignItems: "center",
@@ -268,7 +282,7 @@ export default function Home() {
                                 </View>
                             </View>
                             <ThemedText type="small" style={{ color: theme.textSecondary }}>{item.time}</ThemedText>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                 </View>
             </View>

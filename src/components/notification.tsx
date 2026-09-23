@@ -11,12 +11,13 @@ interface NotificationProps{
     title: string;
     desc: string;
     end?: boolean;
+    onPress?: () => void;
 }
-export default function NotificationCard({icon, title, desc, end=false}:NotificationProps){
+export default function NotificationCard({icon, title, desc, end=false, onPress}:NotificationProps){
     const styles = useStyles();
     const theme = useTheme();
     return(
-        <TouchableOpacity style={styles.notification}>
+        <TouchableOpacity style={styles.notification} onPress={onPress}>
             <MaterialIcons name={icon} size={25} color={theme.text}/>
             <View style={{marginLeft:Spacing.two}}>
                 <ThemedText type="bold">{title}</ThemedText>

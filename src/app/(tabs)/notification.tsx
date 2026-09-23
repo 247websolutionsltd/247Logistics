@@ -6,6 +6,8 @@ import notifications from "@/data/notifications";
 import { useTheme } from "@/hooks/use-theme";
 import { useStyles } from "@/styles/styles";
 import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useState } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 
 const filters = ["All", "Orders", "Wallet", "Updates"];
@@ -13,13 +15,15 @@ const filters = ["All", "Orders", "Wallet", "Updates"];
 export default function Notification() {
     const theme = useTheme();
     const styles = useStyles();
+    const [selectedFilter, setSelectedFilter] = useState("All");
+    const [allMarked, setAllMarked] = useState(false);
     return (
         <Container>
             <View style={{ padding: Spacing.three, paddingBottom: Spacing.two }}>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                     <ThemedText type="large">Notifications</ThemedText>
-                    <TouchableOpacity>
-                        <ThemedText type="small" style={{ color: theme.accentText }}>Mark all</ThemedText>
+                    <TouchableOpacity onPress={() => setAllMarked(true)}>
+                        <ThemedText type="small" style={{ color: theme.accentText }}>{allMarked ? "All marked" : "Mark all"}</ThemedText>
                     </TouchableOpacity>
                 </View>
 
@@ -27,14 +31,15 @@ export default function Notification() {
                     {filters.map((item, index) => (
                         <TouchableOpacity
                             key={item}
+                            onPress={() => setSelectedFilter(item)}
                             style={{
                                 paddingHorizontal: Spacing.two,
                                 paddingVertical: Spacing.one,
                                 borderRadius: 999,
-                                backgroundColor: index === 0 ? Colors.primary : theme.accentSurface,
+                                backgroundColor: selectedFilter === item ? Colors.primary : theme.accentSurface,
                             }}
                         >
-                            <ThemedText type="small" style={{ color: index === 0 ? "#FFF" : theme.accentText }}>
+                            <ThemedText type="small" style={{ color: selectedFilter === item ? "#FFF" : theme.accentText }}>
                                 {item}
                             </ThemedText>
                         </TouchableOpacity>
@@ -62,6 +67,7 @@ export default function Notification() {
                             title={item.title}
                             desc={item.desc}
                             end={index === notifications.length - 1}
+                            onPress={() => router.push(`/notifications/${index}` as never)}
                         />
                     </View>
                 )}

@@ -7,6 +7,7 @@ import transactions from "@/data/transaction";
 import { useTheme } from "@/hooks/use-theme";
 import { useStyles } from "@/styles/styles";
 import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { FlatList, TouchableOpacity, View } from "react-native";
 
 const walletSummary = [
@@ -26,7 +27,7 @@ export default function Wallet() {
             <View style={{ padding: Spacing.three }}>
                 <View style={[styles.rowStretch, { marginBottom: Spacing.two }]}>
                     <ThemedText type="large">Wallet</ThemedText>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push({ pathname: "/search-results", params: { query: "delivery" } } as never)}>
                         <ThemedText type="small" style={{ color: theme.accentText }}>History</ThemedText>
                     </TouchableOpacity>
                 </View>
@@ -71,7 +72,7 @@ export default function Wallet() {
             <View style={{ paddingHorizontal: Spacing.three, marginTop: Spacing.three }}>
                 <View style={[styles.rowStretch, { marginBottom: Spacing.two }]}>
                     <ThemedText type="bold">Overview</ThemedText>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push({ pathname: "/search-results", params: { query: "wallet" } } as never)}>
                         <ThemedText type="small" style={{ color: theme.accentText }}>This month</ThemedText>
                     </TouchableOpacity>
                 </View>
@@ -98,7 +99,7 @@ export default function Wallet() {
             <View style={{ paddingHorizontal: Spacing.three, marginTop: Spacing.four, paddingBottom: Spacing.three }}>
                 <View style={[styles.rowStretch, { marginBottom: Spacing.three }]}>
                     <ThemedText type="bold">Transaction history</ThemedText>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => { /* TODO: connect export to a local file/share flow. */ }}>
                         <ThemedText type="small" style={{ color: theme.accentText }}>Export</ThemedText>
                     </TouchableOpacity>
                 </View>
@@ -109,7 +110,7 @@ export default function Wallet() {
                     contentContainerStyle={{ paddingBottom: Spacing.three }}
                     renderItem={({ item, index }) => (
                         <View style={[styles.transactions, {marginBottom: index === transactions.length - 1 ? 0 : Spacing.two}]}>
-                            <Transaction title={item.title} date={item.date} price={item.price} />
+                            <Transaction title={item.title} date={item.date} price={item.price} onPress={() => router.push(`/order/${item.id}` as never)} />
                         </View>
                     )}
                     keyExtractor={(item, index) => `${item.title}-${index}`}

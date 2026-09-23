@@ -1,0 +1,11 @@
+import Back from "@/components/back";
+import Button from "@/components/button";
+import Container from "@/components/custom-container";
+import { ThemedText } from "@/components/themed-text";
+import { Colors, Spacing } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
+import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { TouchableOpacity, View } from "react-native";
+
+export default function Refer() { const theme = useTheme(); return <Container edges={["top"]}><View style={{ padding: Spacing.three }}><Back onPress={() => router.back()} title="Profile" /><ThemedText type="large" style={{ marginTop: Spacing.three }}>Refer and earn</ThemedText><ThemedText style={{ color: theme.textSecondary, marginTop: Spacing.one }}>Invite a friend and both of you get delivery credit.</ThemedText><View style={{ marginTop: Spacing.three, backgroundColor: Colors.primaryDark, borderRadius: 22, padding: Spacing.three }}><ThemedText type="small" style={{ color: "#dfeee1" }}>Your referral code</ThemedText><View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: Spacing.two }}><ThemedText type="title" style={{ color: "#FFF", letterSpacing: 2 }}>DAVID24</ThemedText><TouchableOpacity><MaterialIcons name="content-copy" size={22} color="#FFF" /></TouchableOpacity></View></View><View style={{ flexDirection: "row", gap: Spacing.two, marginTop: Spacing.three }}><View style={{ flex: 1, padding: Spacing.three, borderRadius: 18, backgroundColor: theme.accentSurface }}><ThemedText type="small" style={{ color: theme.textSecondary }}>Referrals</ThemedText><ThemedText type="large" style={{ color: theme.accentText, marginTop: Spacing.one }}>3</ThemedText></View><View style={{ flex: 1, padding: Spacing.three, borderRadius: 18, backgroundColor: theme.accentSurface }}><ThemedText type="small" style={{ color: theme.textSecondary }}>Earned</ThemedText><ThemedText type="large" style={{ color: theme.accentText, marginTop: Spacing.one }}>$30</ThemedText></View></View><Button title="Share invite" onPress={() => undefined} iconLeft="share" style={{ marginTop: Spacing.three }} /></View></Container>; }

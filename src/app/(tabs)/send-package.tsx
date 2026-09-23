@@ -75,7 +75,7 @@ export default function SendPackage() {
           </ThemedText>
         </View>
 
-        <Button title="Request pickup" onPress={() => router.back()} style={{ marginTop: Spacing.three }} />
+        <Button title="Request pickup" onPress={() => router.push("/order-confirmation?orderId=LT-0284" as never)} style={{ marginTop: Spacing.three }} />
       </ScrollView>
     </Container>
   );

@@ -3,6 +3,7 @@ import { ThemedText } from "@/components/themed-text";
 import { Colors, Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 
 const serviceCards = [
@@ -26,7 +27,7 @@ export default function Explore() {
             <View style={{ padding: Spacing.three }}>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                     <ThemedText type="large">Operations</ThemedText>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push({ pathname: "/search-results", params: { query: "" } } as never)}>
                         <ThemedText type="small" style={{ color: theme.accentText }}>Filters</ThemedText>
                     </TouchableOpacity>
                 </View>
@@ -109,6 +110,7 @@ export default function Explore() {
                     {serviceCards.map((item) => (
                         <TouchableOpacity
                             key={item.title}
+                            onPress={() => item.title === "Track shipment" ? router.push("/track-shipment?orderId=LT-0204" as never) : item.title === "Support desk" ? router.push("/support" as never) : undefined}
                             style={{
                                 width: "48%",
                                 margin: Spacing.one,

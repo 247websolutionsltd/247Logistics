@@ -7,12 +7,13 @@ interface TransactionProps{
     title: string;
     date: string;
     price: string;
+    onPress?: () => void;
 }
-export default function Transaction({title, date, price}:TransactionProps){
+export default function Transaction({title, date, price, onPress}:TransactionProps){
     const styles = useStyles();
     const theme = useTheme();
     return(
-        <TouchableOpacity style={styles.transaction}>
+            <TouchableOpacity style={styles.transaction} onPress={onPress}>
             <View>
                 <ThemedText type="bold">{title}</ThemedText>
                 <ThemedText style={{fontSize:13, lineHeight:15}}>{date}</ThemedText>
