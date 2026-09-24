@@ -187,7 +187,8 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
       padding:Spacing.two,
       height:200,
       justifyContent:'center',
-      paddingVertical:Spacing.four
+      paddingVertical:Spacing.four,
+      backgroundColor:theme.accentSurface
     },
     homeCardView:{
       width:'50%',

@@ -146,8 +146,7 @@ export default function Home() {
                                 icon={item.icon}
                                 title={item.title}
                                 desc={item.desc}
-                                selected={selected === index}
-                                onPress={() => { setSelected(index); openQuickAction(item.title); }}
+                                onPress={() => { openQuickAction(item.title); }}
                             />
                         </View>
                     ))}
