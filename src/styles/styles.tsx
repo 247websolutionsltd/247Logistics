@@ -256,7 +256,7 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
       borderRadius:Radius.sm,
     },
     notification:{
-      paddingVertical:Spacing.three,
+      padding:Spacing.three,
       flexDirection:'row',
       alignItems:'center',
     },

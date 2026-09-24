@@ -29,6 +29,7 @@ export default function Input({label, placeholder="", password, onChangeText, nu
                  keyboardType={number?"numeric":"default"}
                  value={value}
                  multiline={desc}
+                 placeholderTextColor={theme.textSecondary}
                 />
                 {
                     password &&
